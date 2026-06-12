@@ -4,17 +4,15 @@ Aplikasi Enterprise Resource Planning (ERP) berbasis web untuk manajemen pesanan
 
 ---
 
-## 1. Migrasi dari Bolt ke VS Code
-
-Ikuti langkah ini untuk memindahkan project dari Bolt ke mesin lokal dan melanjutkan pengembangan di VS Code.
+## 1. Project
 
 ### 1.1 Prasyarat
 
 Pastikan sudah terinstall:
 
-- **Node.js** versi 18 atau lebih baru — [download](https://nodejs.org/)
-- **Git** — [download](https://git-scm.com/)
-- **VS Code** — [download](https://code.visualstudio.com/)
+- **Node.js** versi 18 atau lebih baru — download (https://nodejs.org/)
+- **Git** — download (https://git-scm.com/)
+- **VS Code** — download (https://code.visualstudio.com/)
 
 Cek instalasi:
 
@@ -24,19 +22,7 @@ npm -v
 git --version
 ```
 
-### 1.2 Unduh Project dari Bolt
-
-Di Bolt, klik tombol **Download** untuk mengekspor project sebagai `.zip`, lalu:
-
-```bash
-# Ekstrak zip ke folder pilihan Anda, lalu masuk ke folder tersebut
-cd path/ke/newgr-erp
-
-# Buka di VS Code
-code .
-```
-
-### 1.3 Install Dependency
+### 1.2 Install Dependency
 
 Di terminal VS Code (Ctrl+`):
 
@@ -44,7 +30,7 @@ Di terminal VS Code (Ctrl+`):
 npm install
 ```
 
-### 1.4 Konfigurasi Environment (.env)
+### 1.3 Konfigurasi Environment (.env)
 
 Buat file `.env` di root project (satu folder dengan `package.json`):
 
@@ -64,7 +50,7 @@ VITE_SUPABASE_ANON_KEY=eyJhbGciOi...dst
 - File `.env` **tidak boleh** di-commit ke Git (sudah ada di `.gitignore`).
 - Nilai di atas adalah kredensial aktif project Supabase yang sudah disiapkan. Bila Anda memakai project Supabase milik sendiri, ganti dengan URL dan anon key Anda — lihat bagian 2.1 cara mendapatkannya.
 
-### 1.5 Jalankan Project
+### 1.4 Jalankan Project
 
 ```bash
 npm run dev
@@ -95,10 +81,14 @@ Struktur tabel terdefinisi di file migrasi berikut (jangan edit manual):
 
 ```
 supabase/migrations/
-  20260430100709_create_newgr_erp_schema_v2.sql   # Skema utama
+  20260430100709_cnmpreate_newgr_erp_schema_v2.sql   # Skema utama
   20260430130115_create_newgr_erp_schema_v2.sql   # Update v2
   20260430131733_fix_security_linter_warnings.sql # Hardening RLS
-  20260430133441_create_uploads_storage_bucket.sql# Bucket upload gambar
+  20260430133441_create_uploads_storage_bucket.sql # Bucket upload gambar
+  20260515120858_cleanup_duplicate_permission_modules.sql # Cleanup data duplikat
+  20260601012448_add_product_status_and_user_profile_fields.sql # update tabel produk dan user_profile
+  20260609120640_add_batal_status_to_orders_and_distributions # update batal status
+  20260609123741_add_batal_to_invoices # Update batal invoices
 ```
 
 Tabel utama: `user_profiles`, `roles`, `permissions`, `customers`, `producers`, `products`, `orders`, `order_items`, `invoices`, `payments`, `distributions`, `stock_movements`, `capital_entries`, `operational_costs`, `audit_logs`, `regions`.
@@ -119,14 +109,14 @@ Jika belum punya akun, buat user baru lewat halaman **Register** di aplikasi, at
 
 ## 3. Perintah NPM
 
-| Perintah | Fungsi |
-|---|---|
-| `npm install` | Install semua dependency (jalankan sekali setelah clone). |
-| `npm run dev` | Jalankan dev server di `http://localhost:5173` dengan hot reload. |
-| `npm run build` | Build production ke folder `dist/`. |
-| `npm run preview` | Preview hasil build production di lokal. |
-| `npm run lint` | Cek error linting (ESLint). |
-| `npm run typecheck` | Cek error TypeScript tanpa build. |
+| Perintah            | Fungsi                                                            |
+| ------------------- | ----------------------------------------------------------------- |
+| `npm install`       | Install semua dependency (jalankan sekali setelah clone).         |
+| `npm run dev`       | Jalankan dev server di `http://localhost:5173` dengan hot reload. |
+| `npm run build`     | Build production ke folder `dist/`.                               |
+| `npm run preview`   | Preview hasil build production di lokal.                          |
+| `npm run lint`      | Cek error linting (ESLint).                                       |
+| `npm run typecheck` | Cek error TypeScript tanpa build.                                 |
 
 ### Alur kerja standar
 
@@ -192,13 +182,13 @@ Jangan lupa set environment variable `VITE_SUPABASE_URL` dan `VITE_SUPABASE_ANON
 
 ## 7. Troubleshooting
 
-| Masalah | Solusi |
-|---|---|
-| `Invalid supabase URL` saat `npm run dev` | Cek `.env` sudah diisi dan tidak ada spasi. Restart dev server. |
-| Gagal login "Invalid credentials" | Buat user baru lewat Register atau lewat Dashboard Supabase. |
-| Gambar tidak muncul setelah upload | Cek di Supabase Dashboard > Storage > `uploads` apakah file tersimpan. |
-| PDF print ada header/footer browser | Di dialog print browser, matikan opsi "Headers and footers". |
-| `npm install` error di Windows | Jalankan terminal VS Code sebagai Administrator, hapus `node_modules` dan `package-lock.json`, lalu `npm install` ulang. |
+| Masalah                                   | Solusi                                                                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `Invalid supabase URL` saat `npm run dev` | Cek `.env` sudah diisi dan tidak ada spasi. Restart dev server.                                                          |
+| Gagal login "Invalid credentials"         | Buat user baru lewat Register atau lewat Dashboard Supabase.                                                             |
+| Gambar tidak muncul setelah upload        | Cek di Supabase Dashboard > Storage > `uploads` apakah file tersimpan.                                                   |
+| PDF print ada header/footer browser       | Di dialog print browser, matikan opsi "Headers and footers".                                                             |
+| `npm install` error di Windows            | Jalankan terminal VS Code sebagai Administrator, hapus `node_modules` dan `package-lock.json`, lalu `npm install` ulang. |
 
 ---
 
