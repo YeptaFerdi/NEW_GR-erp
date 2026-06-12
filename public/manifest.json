@@ -1,0 +1,35 @@
+{
+  "name": "NEW_GR-ERP",
+  "short_name": "NEW_GR",
+  "description": "Enterprise Resource Planning for New GR Krupuk",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a3a6b",
+  "theme_color": "#1a3a6b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon_apk.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/ipad_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/windowns_icon.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "screenshots": []
+}
